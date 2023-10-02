@@ -16,7 +16,19 @@ fn main() -> anyhow::Result<()> {
     let engine = Engine::default();
     let module = Module::new(&engine, source)?;
     for export in module.exports() {
-        println!("{}: {}", export.name(), CustomDisplay::new(export.ty()));
+        println!(
+            "export {}: {}",
+            export.name(),
+            CustomDisplay::new(export.ty())
+        );
+    }
+    for import in module.imports() {
+        println!(
+            "import {}@{}: {}",
+            import.name(),
+            import.module(),
+            CustomDisplay::new(import.ty())
+        )
     }
     Ok(())
 }
